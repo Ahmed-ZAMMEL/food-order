@@ -1,5 +1,5 @@
 import Meals from "../../../models/meals.model";
-import Card from "../../UI/Card";
+import Card from "../../UI/Card/Card";
 import classes from "./AvailableMeals.module.scss";
 import MealItem from "./MealItem/MealItem";
 
