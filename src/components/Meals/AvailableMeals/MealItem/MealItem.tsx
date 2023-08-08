@@ -11,7 +11,12 @@ const MealItem: React.FC<{ meal: Meals }> = ({ meal }) => {
   const price = `$${meal.price.toFixed(2)}`;
 
   const addToCartHandler = (amount: number) => {
-    const item: Item = { id: +meal.id, price: meal.price, amount };
+    const item: Item = {
+      id: meal.id,
+      name: meal.name,
+      price: meal.price,
+      amount,
+    };
     cartCtx.addItem(item);
   };
   return (

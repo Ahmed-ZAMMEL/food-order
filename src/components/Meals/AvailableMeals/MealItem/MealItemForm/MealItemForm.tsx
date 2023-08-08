@@ -10,6 +10,7 @@ const MealItemForm: React.FC<MealItemFormModel> = ({
 }) => {
   const [amountIsValid, setAmountIsValid] = useState<boolean>(true);
   const amountInputRef = createRef<HTMLInputElement>();
+
   const submitHandler = ($event: React.FormEvent): void => {
     $event.preventDefault();
     const enteredAmount = amountInputRef.current
@@ -27,6 +28,7 @@ const MealItemForm: React.FC<MealItemFormModel> = ({
 
     onAddToCart(enteredAmountNumber);
   };
+
   const input: InputModel = {
     label: "Amount",
     properties: {

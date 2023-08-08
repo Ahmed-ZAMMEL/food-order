@@ -7,7 +7,6 @@ import { Item } from "../../../store/cart/cartReducer.model";
 
 const HeaderCartButton: React.FC<{ onClick: () => void }> = ({ onClick }) => {
   const cartCtx = useContext(CartContext);
-  console.log(cartCtx.items);
   const numberOfCartItems = cartCtx.items.reduce(
     (cuNumber, item: Item) => cuNumber + item.amount,
     0

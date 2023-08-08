@@ -13,9 +13,27 @@ const cartReducer = (
   action: CartReducerAction
 ): CartState => {
   if (action.type === "ADD") {
-    const updatedItems = state.items.concat(action.item);
     const updatedTotalAmount =
       state.totalAmount + action.item.price * action.item.amount;
+
+    const existingCartItemIndex = state.items.findIndex(
+      (item) => item.id === action.item.id
+    );
+
+    const existingCartItem = state.items[existingCartItemIndex];
+
+    let updatedItems;
+    if (existingCartItem) {
+      const updatedItem = {
+        ...existingCartItem,
+        amount: existingCartItem.amount + action.item.amount,
+      };
+      updatedItems = [...state.items];
+      updatedItems[existingCartItemIndex] = updatedItem;
+    } else {
+      updatedItems = state.items.concat(action.item);
+    }
+
     return {
       items: updatedItems,
       totalAmount: updatedTotalAmount,
@@ -23,15 +41,19 @@ const cartReducer = (
   }
 
   if (action.type === "REMOVE") {
-    const indexToRemove = state.items.findIndex(
-      (element) => element.id === action.item.id
+    const existingCartItemIndex = state.items.findIndex(
+      (item) => item.id === action.item.id
     );
-    const updatedItems = [
-      ...state.items.slice(0, indexToRemove),
-      ...state.items.slice(indexToRemove + 1),
-    ];
-    const updatedTotalAmount =
-      state.totalAmount - action.item.price * action.item.amount;
+    const existingItem = state.items[existingCartItemIndex];
+    const updatedTotalAmount = state.totalAmount - existingItem.price;
+    let updatedItems;
+    if (existingItem.amount === 1) {
+      updatedItems = state.items.filter((item) => item.id !== action.item.id);
+    } else {
+      const updatedItem = { ...existingItem, amount: existingItem.amount - 1 };
+      updatedItems = [...state.items];
+      updatedItems[existingCartItemIndex] = updatedItem;
+    }
     return {
       items: updatedItems,
       totalAmount: updatedTotalAmount,
@@ -49,7 +71,6 @@ const CartProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   const addItemToCartHandler = (item: Item) => {
     disptchCartAction({ type: "ADD", item });
-    console.log(cartState);
   };
   const removeItemFromCartHandler = (item: Item) => {
     disptchCartAction({ type: "REMOVE", item });
