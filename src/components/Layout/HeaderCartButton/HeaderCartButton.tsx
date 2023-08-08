@@ -1,18 +1,38 @@
 import CartIcon from "../../Cart/CartIcon";
 import classes from "./HeaderCartButton.module.scss";
 
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import CartContext from "../../../store/cart/cart-context";
 import { Item } from "../../../store/cart/cartReducer.model";
 
 const HeaderCartButton: React.FC<{ onClick: () => void }> = ({ onClick }) => {
+  const [btnIsHighlighted, setBtnIsHighlighted] = useState<boolean>(false);
   const cartCtx = useContext(CartContext);
-  const numberOfCartItems = cartCtx.items.reduce(
+  const { items } = cartCtx;
+  const numberOfCartItems = items.reduce(
     (cuNumber, item: Item) => cuNumber + item.amount,
     0
   );
+
+  const btnClasses = `${classes.button} ${
+    btnIsHighlighted ? classes.bump : ""
+  }`;
+
+  useEffect(() => {
+    if (items.length === 0) {
+      return;
+    }
+    setBtnIsHighlighted(true);
+    const timer = setTimeout(() => {
+      setBtnIsHighlighted(false);
+    }, 300);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [items]);
+
   return (
-    <button className={classes.button} onClick={onClick}>
+    <button className={btnClasses} onClick={onClick}>
       <span className={classes.icon}>
         <CartIcon />
       </span>
