@@ -1,13 +1,16 @@
 import classes from "./Cart.module.scss";
 import Modal from "../UI/Modal/Modal";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import CartContext from "../../store/cart/cart-context";
 import CartItem from "./CartItem/CartItem";
 import { Item } from "../../store/cart/cartReducer.model";
 import { CartItemType } from "./CartItem/CartItem.type";
+import Checkout from "./Checkout/Checkout";
+import UserData from "../../models/userData.model";
 
 const Cart: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const cartCtx = useContext(CartContext);
+  const [isCheckout, setIsCheckout] = useState<boolean>(false);
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
   const hasItems = cartCtx.items.length > 0;
 
@@ -24,6 +27,20 @@ const Cart: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     onAdd: cartItemAddHandler.bind(null, item),
   });
 
+  const orderHandler = () => {
+    setIsCheckout(true);
+  };
+
+  const submitOrderHandler = (userData: UserData) => {
+    fetch("https://food-order-a3596-default-rtdb.firebaseio.com/order.json", {
+      method: "POST",
+      body: JSON.stringify({
+        user: userData,
+        orderedItems: cartCtx.items,
+      }),
+    });
+  };
+
   const cartItems = (
     <ul className={classes["cart-items"]}>
       {cartCtx.items.map((item) => (
@@ -31,6 +48,19 @@ const Cart: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       ))}
     </ul>
   );
+  const modalActions = (
+    <div className={classes.actions}>
+      <button className={classes["button--alt"]} onClick={onClose}>
+        Close
+      </button>
+      {hasItems && (
+        <button className={classes.button} onClick={orderHandler}>
+          Order
+        </button>
+      )}
+    </div>
+  );
+
   return (
     <Modal onClose={onClose}>
       {cartItems}
@@ -38,12 +68,13 @@ const Cart: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         <span>Total Amount</span>
         <span>{totalAmount}</span>
       </div>
-      <div className={classes.actions}>
-        <button className={classes["button--alt"]} onClick={onClose}>
-          Close
-        </button>
-        {hasItems && <button className={classes.button}>Order</button>}
-      </div>
+      {
+        // TO DO: add a context to manipulate Modal
+      }
+      {isCheckout && (
+        <Checkout onConfirm={submitOrderHandler} onCancel={onClose} />
+      )}
+      {!isCheckout && modalActions}
     </Modal>
   );
 };
