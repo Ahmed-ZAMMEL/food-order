@@ -1,25 +1,16 @@
+import Todos from "./components/Todos/Todos";
+import "./App.css";
+import { TodosModel } from "./components/Todos/Todos.type";
+import NewTodo from "./components/NewTodo/NewTodo";
 import { useState } from "react";
-import Header from "./components/Layout/Header/Header";
-import Meals from "./components/Meals/Meals";
-import Cart from "./components/Cart/Cart";
-import CartProvider from "./store/cart/cartProvider";
+import TodosContextProvider from "./store/todos-context";
 
 function App() {
-  const [cartIsShown, setCartIsShown] = useState(false);
-  const showCartHandler = () => {
-    setCartIsShown(true);
-  };
-  const hideCartHandler = () => {
-    setCartIsShown(false);
-  };
   return (
-    <CartProvider>
-      {cartIsShown && <Cart onClose={hideCartHandler} />}
-      <Header onShowCart={showCartHandler} />
-      <main>
-        <Meals />
-      </main>
-    </CartProvider>
+    <TodosContextProvider>
+      <NewTodo />
+      <Todos />
+    </TodosContextProvider>
   );
 }
 
