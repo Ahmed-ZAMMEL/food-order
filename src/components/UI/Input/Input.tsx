@@ -1,8 +1,8 @@
 import React from "react";
-import InputModel from "../../../models/input.model";
 import classes from "./Input.module.scss";
+import { InputProps } from "./input.type";
 
-const Input = React.forwardRef<HTMLInputElement, { input: InputModel }>(
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ input }, ref): JSX.Element => {
     const { label, properties } = input;
     return (

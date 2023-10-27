@@ -2,9 +2,9 @@ import { createRef, useState } from "react";
 import InputModel from "../../../../../models/input.model";
 import Input from "../../../../UI/Input/Input";
 import classes from "./MealItemForm.module.scss";
-import MealItemFormModel from "./MealItemForm.propsType";
+import { MealItemFormProps } from "./MealItemForm.type";
 
-const MealItemForm: React.FC<MealItemFormModel> = ({
+const MealItemForm: React.FC<MealItemFormProps> = ({
   inputId,
   onAddToCart,
 }) => {

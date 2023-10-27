@@ -7,8 +7,9 @@ import { Item } from "../../store/cart/cartReducer.model";
 import { CartItemType } from "./CartItem/CartItem.type";
 import Checkout from "./Checkout/Checkout";
 import UserData from "../../models/userData.model";
+import { CheckoutProps } from "./Cart.type";
 
-const Cart: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+const Cart: React.FC<CheckoutProps> = ({ onClose }) => {
   const cartCtx = useContext(CartContext);
   const [isCheckout, setIsCheckout] = useState<boolean>(false);
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;

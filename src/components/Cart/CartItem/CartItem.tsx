@@ -1,7 +1,7 @@
 import classes from "./CartItem.module.scss";
-import { CartItemTypeFC } from "./CartItem.type";
+import { CartItemProps } from "./CartItem.type";
 
-const CartItem: React.FC<CartItemTypeFC> = ({ cartItem }) => {
+const CartItem: React.FC<CartItemProps> = ({ cartItem }) => {
   const formattedPrice = `$${cartItem.price.toFixed(2)}`;
   return (
     <li className={classes["cart-item"]}>

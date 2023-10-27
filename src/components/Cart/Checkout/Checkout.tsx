@@ -1,24 +1,19 @@
-import { FormEvent } from "react";
 import classes from "./Checkout.module.scss";
-import UserData from "../../../models/userData.model";
-const Checkout: React.FC<{
-  onCancel: () => void;
-  onConfirm: (userData: UserData) => void;
-}> = ({ onCancel, onConfirm }) => {
+import { CheckoutProps } from "./Checkout.type";
+import UserDataModel from "../../../models/userData.model";
+const Checkout: React.FC<CheckoutProps> = ({ onCancel, onConfirm }) => {
   //TO DO: Use react form hook.
 
-  const isEmpty = (str: string) => !str?.trim().length;
-  const isFiveChars = (str: string) => str.trim().length !== 5;
-
-  const confirmHandler = ($event: FormEvent) => {
-    $event.preventDefault();
-    // add user data
-    onConfirm({
+  const confirmHandler = ($event: React.FormEvent) => {
+    const userDataExample: UserDataModel = {
       name: "example",
       street: "example",
       city: "example",
       postalCode: 0,
-    });
+    };
+    $event.preventDefault();
+    // add user data
+    onConfirm(userDataExample);
   };
   return (
     <form onSubmit={confirmHandler}>

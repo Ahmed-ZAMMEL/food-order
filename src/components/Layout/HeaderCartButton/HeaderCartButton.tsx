@@ -4,8 +4,9 @@ import classes from "./HeaderCartButton.module.scss";
 import { useContext, useEffect, useState } from "react";
 import CartContext from "../../../store/cart/cart-context";
 import { Item } from "../../../store/cart/cartReducer.model";
+import { HeaderCartButtonProps } from "./HeaderCartButton.type";
 
-const HeaderCartButton: React.FC<{ onClick: () => void }> = ({ onClick }) => {
+const HeaderCartButton: React.FC<HeaderCartButtonProps> = ({ onClick }) => {
   const [btnIsHighlighted, setBtnIsHighlighted] = useState<boolean>(false);
   const cartCtx = useContext(CartContext);
   const { items } = cartCtx;

@@ -3,25 +3,23 @@ import ReactDOM from "react-dom";
 
 import classes from "./Modal.module.scss";
 import PropsWithChildren from "../../../models/propsWithChildren.model";
-import Modelprops from "./propsType.model";
+import { ModelProps, BackdropProps } from "./Modal.type";
 
-const Backdrop: React.FC<{ onClose: () => void }> = ({
-  onClose,
-}): JSX.Element => {
+const Backdrop: React.FC<BackdropProps> = ({ onClose }): JSX.Element => {
   return <div className={classes.backdrop} onClick={onClose} />;
 };
 
-const ModalOverlay: React.FC<PropsWithChildren> = (props) => {
+const ModalOverlay: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <div className={classes.modal}>
-      <div className={classes.content}>{props.children}</div>
+      <div className={classes.content}>{children}</div>
     </div>
   );
 };
 //! = this value is never null.
 const portalElement = document.getElementById("overlays")!;
 
-const Modal: React.FC<Modelprops> = ({ onClose, children }) => {
+const Modal: React.FC<ModelProps> = ({ onClose, children }) => {
   return (
     <Fragment>
       {ReactDOM.createPortal(<Backdrop onClose={onClose} />, portalElement)}

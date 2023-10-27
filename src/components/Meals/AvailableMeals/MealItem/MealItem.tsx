@@ -1,12 +1,12 @@
 import { useContext } from "react";
-import Meals from "../../../../models/meals.model";
 import classes from "./MealItem.module.scss";
 
 import MealItemForm from "./MealItemForm/MealItemForm";
 import CartContext from "../../../../store/cart/cart-context";
 import { Item } from "../../../../store/cart/cartReducer.model";
+import { MealItemProps } from "./MealItem.type";
 
-const MealItem: React.FC<{ meal: Meals }> = ({ meal }) => {
+const MealItem: React.FC<MealItemProps> = ({ meal }) => {
   const cartCtx = useContext(CartContext);
   const price = `$${meal.price.toFixed(2)}`;
 

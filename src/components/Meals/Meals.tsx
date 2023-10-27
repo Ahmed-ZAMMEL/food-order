@@ -3,7 +3,7 @@ import { Fragment } from "react";
 import MealsSummary from "./MealsSummary/MealsSummary";
 import AvailableMeals from "./AvailableMeals/AvailableMeals";
 
-const Meals = () => {
+const Meals: React.FC<{}> = () => {
   return (
     <Fragment>
       <MealsSummary />

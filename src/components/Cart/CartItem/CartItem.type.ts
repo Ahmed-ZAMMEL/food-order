@@ -1,6 +1,4 @@
-import { Item } from "../../../store/cart/cartReducer.model";
-
-export interface CartItemTypeFC {
+export interface CartItemProps {
   cartItem: CartItemType;
 }
 
